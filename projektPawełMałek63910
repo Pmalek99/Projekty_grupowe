@@ -1,0 +1,95 @@
+import random
+import pdb
+
+
+    # 2 połowy talii. --> talia [] || tworzenie
+    # Tasowanie
+    # 2 graczy/rękę
+    # Każdy gacz wyrzuca wiechrznią kartę i porównujemy je.
+    # Wygrany dodaje obie karty do swojej ręki.
+    # Przegrywa gracz, który stracił wszystkie karty.
+
+def porownaj(gracz_1, gracz_2, stol_g1,stol_g2):
+    if stol_g1[-1] > stol_g2[-1]:
+        print("g1")
+        return 1
+    if stol_g1[-1] < stol_g2[-1]:
+        print("g2")
+        return 2
+    if stol_g1[-1] == stol_g2[-1]:
+
+        return wojna(gracz_1,gracz_2,stol_g1,stol_g2)
+
+def wojna(gracz_1, gracz_2, stol_1, stol_2):
+    #pdb.set_trace()
+    # pobierz 3 karty do stolow
+    # porównaj
+
+    for x in range(3):
+        if len(gracz_1) > 0:
+            stol_1.append(gracz_1.pop())
+        if len(gracz_2) > 0:
+            stol_2.append(gracz_2.pop())
+
+    return porownaj(gracz_1, gracz_2, stol_1, stol_2)
+
+
+def tura(gracz_1, gracz_2, stol_1, stol_2):
+    if len(gracz_1) > 0:
+        stol_1.append(gracz_1.pop())
+    else:
+        print("wygrywa gracz 2")
+        return 0
+    if len(gracz_2) > 0:
+        stol_2.append(gracz_2.pop())
+    else:
+        print("wygrywa gracz 1")
+        return 0
+
+    if porownaj(gracz_1,gracz_2,stol_1,stol_2) == 2:
+        for karta in range(len(stol_1)):
+            gracz_2.append(stol_1.pop(0))
+        for karta in range(len(stol_2)):
+            gracz_2.append(stol_2.pop(0))
+
+    elif porownaj(gracz_1,gracz_2,stol_1,stol_2) == 1:
+        for karta in range(len(stol_1)):
+            gracz_1.append(stol_1.pop(0))
+        for karta in range(len(stol_2)):
+            gracz_1.append(stol_2.pop(0))
+    return 1
+
+
+lista1 = [1,2,3,1,[11,4]]
+granica = int(len(lista1))
+lista2 = lista1
+
+print(lista1[4][1])
+
+talia_kart = [2,3,4,5,6,7,8,9,10,11,12,13]*4
+random.shuffle(talia_kart)
+nowa_talia = talia_kart[0:2]
+
+
+gracz_1 = talia_kart[0:int(len(talia_kart)/2)+1]
+gracz_2 = talia_kart[int(len(talia_kart)/2):]
+
+stol_g1 = []
+stol_g2 = []
+
+lista3 = []
+lista4 = []
+
+reka1 = [3,4,5,6,2,4,5,6,7,8,6]
+reka2 = [5,6,7,8,2,4,5,6,7,4,6]
+
+
+#tura(reka1,reka2,lista3,lista4)
+game_on = 1
+while(game_on):
+    game_on = tura(reka1,reka2,lista3,lista4)
+
+print(reka2)
+print(reka1)
+print(lista3)
+print(lista4)
